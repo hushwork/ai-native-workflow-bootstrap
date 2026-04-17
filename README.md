@@ -1,81 +1,70 @@
 # AI-Native Workflow Bootstrap
 
-A project-agnostic toolkit for setting up AI-native development workflows in any codebase. Works with Claude Code, Cursor, Copilot, and other AI coding assistants.
+A Claude Code skill for setting up AI-native development workflows in any codebase.
 
-## What it does
-
-Generates a complete 5-layer AI-native development setup:
-
-1. **CLAUDE.md** — Project instructions that AI agents auto-read
-2. **scripts/committer** — Safe commit wrapper (prevents `git add .` accidents)
-3. **git-hooks/pre-commit** — Pre-commit quality checks
-4. **Per-module AGENTS.md** — Scoped boundary rules per module
-5. **Agent skills** — Reusable task templates (PR review, deploy, etc.)
-
-## Quick start
-
-### One-liner bootstrap
+## Install
 
 ```bash
 cd your-project
-bash <(curl -s https://raw.githubusercontent.com/hushwork/ai-native-workflow-bootstrap/main/scripts/bootstrap-ai-workflow.sh)
-```
-
-### Or clone and run
-
-```bash
-git clone https://github.com/hushwork/ai-native-workflow-bootstrap.git /tmp/ainb
-bash /tmp/ainb/scripts/bootstrap-ai-workflow.sh
-```
-
-### Or copy as a skill into your project
-
-```bash
 mkdir -p .agents/skills
-cp -r /path/to/ai-native-workflow-bootstrap .agents/skills/ai-native-workflow-bootstrap
+git clone https://github.com/hushwork/ai-native-workflow-bootstrap.git .agents/skills/ai-native-workflow-bootstrap
 ```
 
-Then in Claude Code: "Follow `.agents/skills/ai-native-workflow-bootstrap/SKILL.md` to set up this project."
+## Use
 
-## Supported stacks
+### In Claude Code (recommended)
 
-| Stack | Auto-detected by | Source dir |
-|-------|-----------------|-----------|
-| Node/TypeScript | `package.json` | `src/` |
-| Flutter/Dart | `pubspec.yaml` | `lib/` |
-| Go | `go.mod` | `.` |
-| Python | `pyproject.toml` / `setup.py` | `src/` |
-| Rust | `Cargo.toml` | `src/` |
+```
+> Follow .agents/skills/ai-native-workflow-bootstrap/SKILL.md to set up this project
+```
 
-## What gets generated
+Claude Code reads the skill guide and helps you set up everything step by step.
+
+### Or run the bootstrap script directly
+
+```bash
+# Preview what will be generated
+.agents/skills/ai-native-workflow-bootstrap/scripts/bootstrap-ai-workflow.sh --dry-run
+
+# Generate files
+.agents/skills/ai-native-workflow-bootstrap/scripts/bootstrap-ai-workflow.sh
+```
+
+## What it generates
 
 ```
 your-project/
   CLAUDE.md              # AI agent instructions (customized to your stack)
-  AGENTS.md -> CLAUDE.md # Symlink for other AI tools
-  scripts/committer      # Safe commit wrapper
+  AGENTS.md -> CLAUDE.md # Symlink
+  scripts/committer      # Safe commit wrapper (prevents git add . accidents)
   git-hooks/pre-commit   # Pre-commit hook skeleton
   .agents/skills/        # Agent skill directory
     <project>-pr-review/ # Starter PR review skill
-  src/*/AGENTS.md        # Per-module boundary files (for dirs with 3+ files)
+  src/*/AGENTS.md        # Per-module boundary files
 ```
+
+## Supported stacks
+
+Auto-detected: Node/TypeScript, Flutter/Dart, Go, Python, Rust.
+
+## The 5-layer model
+
+See [SKILL.md](SKILL.md) for the complete guide:
+
+1. **Code Architecture Constraints** — Module boundaries, import rules
+2. **Local Guard Tools** — Commit wrapper, pre-commit hooks
+3. **CI/CD Automation** — Smart CI, auto-labeling, stale management
+4. **Instruction Hierarchy** — Root CLAUDE.md + per-module AGENTS.md
+5. **Agent Skill System** — Reusable task workflows
+6. **Frontend-Backend Collaboration** — Auto-generated API spec as contract
+7. **Multi-Agent Safety** — Parallel AI agents on same codebase
 
 ## Options
 
 ```bash
-bash bootstrap-ai-workflow.sh --dry-run    # Preview without writing
-bash bootstrap-ai-workflow.sh --skip-ci    # Skip CI-related suggestions
+--dry-run    # Preview without writing files
+--skip-ci    # Skip CI-related suggestions in output
 ```
-
-## The 5-layer model
-
-See [SKILL.md](SKILL.md) for the complete guide, including:
-
-- Decision tree (what to implement based on team size)
-- Templates for CLAUDE.md, AGENTS.md, commit wrapper, pre-commit hook, skills
-- Frontend-backend collaboration workflow (Swagger/OpenAPI as contract)
-- Multi-agent safety rules (parallel AI agents on same codebase)
-- Stack-specific notes (NestJS, Flutter, Go, Python, Monorepo)
 
 ## License
 
