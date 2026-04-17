@@ -1,6 +1,13 @@
 ---
 name: ai-native-workflow-bootstrap
-description: Project-agnostic guide for bootstrapping a 5-layer AI-native development workflow in any codebase. Use when setting up CLAUDE.md instruction hierarchies, commit wrapper scripts, pre-commit hooks, smart CI, agent skills, and per-module boundary guides.
+description: >
+  Bootstrap a 5-layer AI-native development workflow in any codebase.
+  Use when setting up CLAUDE.md, commit wrapper scripts, pre-commit hooks,
+  smart CI, agent skills, per-module boundary guides, or frontend-backend
+  API contract workflows.
+argument-hint: "[--dry-run]"
+disable-model-invocation: true
+allowed-tools: Read Glob Grep Bash(mkdir *) Bash(chmod *) Bash(ln *) Bash(git config *) Bash(${CLAUDE_SKILL_DIR}/scripts/bootstrap-ai-workflow.sh *)
 ---
 
 # AI-Native Workflow Bootstrap
@@ -270,7 +277,10 @@ Skill skeleton:
 ```markdown
 ---
 name: <project>-<task>
-description: <When to use this skill and what it does. One or two sentences.>
+description: <When to use this skill. Front-load the key trigger phrase.>
+argument-hint: "[optional-args]"
+disable-model-invocation: true
+allowed-tools: Read Grep Bash(npm test *)
 ---
 
 # <Task Name>
@@ -297,7 +307,21 @@ Use this skill for <scope>.
 - <Edge case to watch for>
 ```
 
-Reference in root CLAUDE.md: `` Use `$<skill-name>` at `.claude/skills/<skill-name>/SKILL.md` for <purpose>. ``
+Key frontmatter fields:
+
+| Field | When to use |
+|-------|------------|
+| `disable-model-invocation: true` | Manual-only tasks like deploy, publish, send messages |
+| `allowed-tools` | Pre-approve tools so Claude doesn't ask for permission every time |
+| `argument-hint` | Show hint in `/` autocomplete (e.g., `[issue-number]`) |
+| `context: fork` | Run in isolated subagent (no conversation history) |
+| `paths` | Auto-activate only when working with matching files (e.g., `"**/*.ts"`) |
+
+Use `$ARGUMENTS` in skill content to reference arguments passed by the user (e.g., `/deploy staging` → `$ARGUMENTS` = `staging`).
+
+Skill locations:
+- `.claude/skills/<name>/SKILL.md` — project-level (commit to git, team shares)
+- `~/.claude/skills/<name>/SKILL.md` — personal-level (all your projects)
 
 Good first skills to create:
 - `<project>-deploy` -- deployment to staging/production
