@@ -220,7 +220,7 @@ This file provides guidance to AI coding agents working in this repository.
 
 ## Agent Skills
 
-- Use `$<skill-name>` at `.agents/skills/<skill-name>/SKILL.md` for <purpose>.
+- Use `$<skill-name>` at `.claude/skills/<skill-name>/SKILL.md` for <purpose>.
 ```
 
 Design rules:
@@ -263,7 +263,7 @@ Always create a symlink: `ln -s AGENTS.md CLAUDE.md` in the same directory.
 
 For tasks that repeat (PR review, deployment, migration), create standardized skills.
 
-Directory convention: `.agents/skills/<name>/SKILL.md`
+Directory convention: `.claude/skills/<name>/SKILL.md`
 
 Skill skeleton:
 
@@ -297,7 +297,7 @@ Use this skill for <scope>.
 - <Edge case to watch for>
 ```
 
-Reference in root CLAUDE.md: `` Use `$<skill-name>` at `.agents/skills/<skill-name>/SKILL.md` for <purpose>. ``
+Reference in root CLAUDE.md: `` Use `$<skill-name>` at `.claude/skills/<skill-name>/SKILL.md` for <purpose>. ``
 
 Good first skills to create:
 - `<project>-deploy` -- deployment to staging/production
@@ -388,7 +388,7 @@ Recommended implementation order:
 8. Add smart-CI preflight job to existing CI pipeline
 9. Add stale-management workflow
 10. Add auto-labeler workflow
-11. Create `.agents/skills/` directory
+11. Create `.claude/skills/` directory
 12. Write first skill for your most repetitive maintenance task
 13. Review and iterate after 2 weeks of AI agent usage
 

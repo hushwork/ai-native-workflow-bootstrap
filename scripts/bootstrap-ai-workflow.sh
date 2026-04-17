@@ -150,7 +150,7 @@ This file provides guidance to AI coding agents working in this repository.
 
 ## Agent Skills
 
-- Skills live in \`.agents/skills/<name>/SKILL.md\`.
+- Skills live in \`.claude/skills/<name>/SKILL.md\`.
 "
 
 make_symlink "CLAUDE.md" "AGENTS.md"
@@ -230,7 +230,7 @@ fi
 
 # --- Generate .agents/skills directory with a starter skill ---
 
-write_file ".agents/skills/${PROJECT_NAME}-pr-review/SKILL.md" "---
+write_file ".claude/skills/${PROJECT_NAME}-pr-review/SKILL.md" "---
 name: ${PROJECT_NAME}-pr-review
 description: Review pull requests for ${PROJECT_NAME} with a focus on code quality, architecture boundary compliance, and test coverage.
 ---
@@ -306,7 +306,7 @@ printf '\nNext steps:\n'
 printf '  1. Review and customize CLAUDE.md for your project\n'
 printf '  2. Add lint/format commands to git-hooks/pre-commit\n'
 printf '  3. Update per-module AGENTS.md files with real boundary rules\n'
-printf '  4. Create more skills in .agents/skills/ as needed\n'
+printf '  4. Create more skills in .claude/skills/ as needed\n'
 if [ "$SKIP_CI" = false ]; then
   printf '  5. Add smart-CI preflight job to your CI pipeline\n'
 fi

@@ -4,30 +4,37 @@ A Claude Code skill for setting up AI-native development workflows in any codeba
 
 ## Install
 
+### Project-level (team shares via git)
+
 ```bash
 cd your-project
-mkdir -p .agents/skills
-git clone https://github.com/hushwork/ai-native-workflow-bootstrap.git .agents/skills/ai-native-workflow-bootstrap
+git clone https://github.com/hushwork/ai-native-workflow-bootstrap.git .claude/skills/ai-native-workflow-bootstrap
+rm -rf .claude/skills/ai-native-workflow-bootstrap/.git
+```
+
+Commit `.claude/skills/` to your repo. All teammates using Claude Code will see it.
+
+### Personal-level (available across all your projects)
+
+```bash
+git clone https://github.com/hushwork/ai-native-workflow-bootstrap.git ~/.claude/skills/ai-native-workflow-bootstrap
+rm -rf ~/.claude/skills/ai-native-workflow-bootstrap/.git
 ```
 
 ## Use
 
-### In Claude Code (recommended)
+In Claude Code, type:
 
 ```
-> Follow .agents/skills/ai-native-workflow-bootstrap/SKILL.md to set up this project
+/ai-native-workflow-bootstrap
 ```
 
-Claude Code reads the skill guide and helps you set up everything step by step.
+Claude Code will follow the skill guide to set up your project step by step.
 
-### Or run the bootstrap script directly
+Or run the bootstrap script directly for quick setup:
 
 ```bash
-# Preview what will be generated
-.agents/skills/ai-native-workflow-bootstrap/scripts/bootstrap-ai-workflow.sh --dry-run
-
-# Generate files
-.agents/skills/ai-native-workflow-bootstrap/scripts/bootstrap-ai-workflow.sh
+.claude/skills/ai-native-workflow-bootstrap/scripts/bootstrap-ai-workflow.sh
 ```
 
 ## What it generates
@@ -38,7 +45,7 @@ your-project/
   AGENTS.md -> CLAUDE.md # Symlink
   scripts/committer      # Safe commit wrapper (prevents git add . accidents)
   git-hooks/pre-commit   # Pre-commit hook skeleton
-  .agents/skills/        # Agent skill directory
+  .claude/skills/        # Skill directory
     <project>-pr-review/ # Starter PR review skill
   src/*/AGENTS.md        # Per-module boundary files
 ```
@@ -58,6 +65,15 @@ See [SKILL.md](SKILL.md) for the complete guide:
 5. **Agent Skill System** — Reusable task workflows
 6. **Frontend-Backend Collaboration** — Auto-generated API spec as contract
 7. **Multi-Agent Safety** — Parallel AI agents on same codebase
+
+## How Claude Code skills work
+
+- A skill is a directory with a `SKILL.md` file inside `.claude/skills/`
+- `.claude/skills/` = project-level (commit to git, team shares)
+- `~/.claude/skills/` = personal-level (all your projects)
+- Users invoke with `/skill-name` slash command
+- Claude can also auto-invoke based on the skill description
+- No registry, no compilation — skills are just markdown instructions
 
 ## Options
 
